@@ -7,10 +7,7 @@ output:
     highlight: zenburn
     theme: readable
 ---
-<style>
-pre.r{ background-color:#333; color:#ffffff; }
-pre { color:#333; }
-</style>
+
 
 ## Installing Tensorflow for R
 
