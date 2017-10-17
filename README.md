@@ -8,4 +8,4 @@
 
 * [CH-01 Session](https://github.com/yichunsung/R-Tensorflow_Notebook/blob/master/ch1-session_creation.Rmd)
 
-[CH-02 Variable]()
+* [CH-02 Variable]()
