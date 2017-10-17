@@ -60,9 +60,17 @@ for (i in 1:1000){
     sess$run(cross_entropy, feed_dict = dict(xs = Matrix_Mnist_train_image, ys = Matrix_MNIST_label)) %>% print()
   }
 }
+# Buliding Accuracy function
+# def compute_accuracy(v_xs, v_ys):
+#   global output_Layer
+# y_pre = sess.run(output_Layer, feed_dict={xs: v_xs, keep_prob: 1})
+# correct_prediction = tf.equal(tf.argmax(y_pre,1), tf.argmax(v_ys,1))
+# accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+# result = sess.run(accuracy, feed_dict={xs: v_xs, ys: v_ys, keep_prob:1})
+# return result
 
 # Test trained model
-correct_prediction <- tf$equal(tf$argmax(y, 1L), tf$argmax(y_, 1L))
+correct_prediction <- tf$equal(tf$argmax(y, 1L), tf$argmax(ys, 1L))
 accuracy <- tf$reduce_mean(tf$cast(correct_prediction, tf$float32))
 sess$run(accuracy,
-         feed_dict = dict(x = mnist$test$images, y_ = mnist$test$labels))
+         feed_dict = dict(xs = Matrix_Mnist_train_image, ys = Matrix_MNIST_label))
