@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(tensorflow)\nlibrary(magrittr)\n\n# Building DNN model\n## Building layer structure\nadd_layer <- function(inputs, input_size, output_size, activation_function = \"None\"){\n  Weights <- tf$Variable(tf$random_normal(shape(input_size, output_size)))\n  biases <- tf$Variable(tf$zeros(shape(1, output_size)))\n  Wx_plus_b <-tf$matmul(inputs, Weights)+biases\n  if(activation_function == \"None\"){\n    outputs <- Wx_plus_b\n  }else{\n    outputs <- activation_function(Wx_plus_b)\n  }\n}\n\n# Building placeholder\nxs <- tf$placeholder(tf$float32, shape(NULL, 784L))\nys <- tf$placeholder(tf$float32, shape(NULL, 10L))\n\n# Building Nerual Network Structure\noutput_layer <- add_layer(xs, 784, 10, activation_function = tf$nn$softmax)\n\n# Building loss error method (cross entropy)\ncross_entropy <- tf$reduce_mean(-tf$reduce_sum(ys*tf$log(output_layer), \n                                               reduction_indices = 1L))\n\n# Buliding Gradient Descent and learning rate\nlearning_rate <- 0.1 # Set learning rate = 0.1\ntrain_step_by_GD <- tf$train$GradientDescentOptimizer(learning_rate)$minimize(cross_entropy)\n\n# data mungung\nMnist_train <- read.csv(\"C:/Machine-Learing-Notebook/data/Digit_Recognizer/train.csv\")\nMnist_label <- Mnist_train[,1]\nMnist_train_image <- Mnist_train[,-1]/256\nMatrix_Mnist_train_image <- as.matrix(Mnist_train_image)\n\nMnistLabel <- data.frame(Mnist_label)\nfor(i in c(0:9)){\n  newCol <- ifelse(MnistLabel$Mnist_label == i,\n                   1,\n                   0)\n  MnistLabel <- cbind(MnistLabel, newCol)\n}\nnames(MnistLabel)[2:11] <- c(0:9)\nMatrix_MNIST_label <- as.matrix(MnistLabel[,-1])\n\n# Session setting\ninitiz <- tf$global_variables_initializer()\nsess <- tf$Session()\nsess$run(initiz)\n\n# Training\nfor (i in 1:1000){\n  #batches <- mnist$train$next_batch(100L)\n  #batch_xs <- batches[[1]]\n  #batch_ys <- batches[[2]]\n  sess$run(train_step_by_GD, feed_dict = dict(xs = Matrix_Mnist_train_image, ys = Matrix_MNIST_label))\n  if(i %% 50 == 0){\n    sess$run(cross_entropy, feed_dict = dict(xs = Matrix_Mnist_train_image, ys = Matrix_MNIST_label)) %>% print()\n  }\n}\n# Buliding Accuracy function\n# def compute_accuracy(v_xs, v_ys):\n#   global output_Layer\n# y_pre = sess.run(output_Layer, feed_dict={xs: v_xs, keep_prob: 1})\n# correct_prediction = tf.equal(tf.argmax(y_pre,1), tf.argmax(v_ys,1))\n# accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))\n# result = sess.run(accuracy, feed_dict={xs: v_xs, ys: v_ys, keep_prob:1})\n# return result\n\n# Test trained model\ncorrect_prediction <- tf$equal(tf$argmax(y, 1L), tf$argmax(ys, 1L))\naccuracy <- tf$reduce_mean(tf$cast(correct_prediction, tf$float32))\nsess$run(accuracy,\n         feed_dict = dict(xs = Matrix_Mnist_train_image, ys = Matrix_MNIST_label))\n",
+    "created" : 1509287791298.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2186963349",
+    "id" : "A487BBCF",
+    "lastKnownWriteTime" : 1508167021,
+    "last_content_update" : 1508167021,
+    "path" : "D:/Github_rep/R-Tensorflow_Notebook/DNN/Kaggle_DNN_demo.R",
+    "project_path" : "DNN/Kaggle_DNN_demo.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
