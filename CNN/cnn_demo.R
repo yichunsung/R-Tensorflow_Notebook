@@ -121,7 +121,7 @@ fcLayer_1 <- add_fullyConnectedLayer(
 ## Fully connected layer 2
 output_result <- add_fullyConnectedLayer(
   inputData = fcLayer_1,
-  Weight_FCLayer = shape(1024L, 10L) %>% tf$random_normal(., stddev = 0.1) %>% tf$Variable(), # Set first layer ouput = 10 labels
+  Weight_FCLayer = shape(1024L, 10L) %>% tf$random_normal(., stddev = 0.1) %>% tf$Variable(), # Set output layer ouput = 10 labels
   bias_FCLayer = shape(10L) %>% add_bias(),
   activation_function = tf$nn$softmax
 )
